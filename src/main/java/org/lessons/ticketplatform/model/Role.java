@@ -18,7 +18,7 @@ public class Role {
   private Long id;
 
   @NotBlank
-  @Column(unique = true)
+  @Column(unique = true, length = 20)
   private String name;
 
   @OneToMany(mappedBy = "role")

@@ -2,6 +2,7 @@ package org.lessons.ticketplatform.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class User {
   private Long id;
 
   @NotBlank(message = "username cannot be blank")
+  @Column(length = 50)
   private String username;
 
   @NotBlank(message = "password cannot be blank")
@@ -27,13 +29,13 @@ public class User {
   private boolean status;
 
   @ManyToOne
-  @JoinColumn(name = "users")
+  @JoinColumn()
   private Role role;
 
-  @OneToMany(mappedBy = "users")
+  @OneToMany(mappedBy = "user")
   private List<Ticket> tickets;
 
-  @OneToMany(mappedBy = "users")
+  @OneToMany(mappedBy = "user")
   private List<Note> notes;
 
   public Long getId() {
