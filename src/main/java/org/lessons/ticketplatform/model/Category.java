@@ -21,7 +21,7 @@ public class Category {
   @Column(unique = true, length = 10)
   private String name;
 
-  @OneToMany(mappedBy = "categories")
+  @OneToMany(mappedBy = "category")
   private List<Ticket> ticket;
 
   public Long getId() {

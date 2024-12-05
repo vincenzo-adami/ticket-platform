@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Create a ticket</title>
+  </head>
+  <body>
+    <header>
+      <div th:replace="~{navbar :: navbar}"></div>
+    </header>
+    <main>
+      <div class="container">
+        <h3>Create a Ticket</h3>
+        <form
+          th:action="@{/tickets/store}"
+          class="row"
+          id="ticket-form"
+          th:object="${ticket}"
+          method="post"
+        >
+          <div class="col-md-4">
+            <label for="title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="from-cotrol"
+              id="title"
+              th:errorClass="is-invalid"
+              th:field="*{title}"
+            />
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}">
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('title')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="category" class="form-label">Category</label>
+            <select
+              name="category"
+              id="category"
+              th:field="*{category}"
+              class="from-cotrol"
+              th:errorClass="is-invalid"
+            >
+              <option
+                th:each="category : ${categories}"
+                th:value="${category.id}"
+                th:text="${category.name}"
+              ></option>
+            </select>
+            <div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('category')}"
+            >
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('category')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="user" class="form-label">User</label>
+            <select
+              name="user"
+              id="user"
+              th:field="*{user}"
+              class="from-cotrol"
+              th:errorClass="is-invalid"
+            >
+              <option
+                th:each="user : ${users}"
+                th:value="${user.id}"
+                th:text="${user.username}"
+              ></option>
+            </select>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('user')}">
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('user')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="text" class="form-label">Description</label>
+            <textarea
+              id="text"
+              class="form-control"
+              type="text"
+              th:field="*{text}"
+              row="4"
+              th:errorClass="is-invalid"
+            ></textarea>
+            <div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('text')}"
+            ></div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-success" type="submit">
+              Create <i class="fa fa-plus"></i>
+            </button>
+            <a th:href="@{'/tickets'}" class="btn btn-danger">
+              Cancel <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>
