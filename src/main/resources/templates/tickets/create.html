@@ -13,7 +13,7 @@
         <h3>Create a Ticket</h3>
         <form
           th:action="@{/tickets/store}"
-          class="row"
+          class="row g-3"
           id="ticket-form"
           th:object="${ticket}"
           method="post"
@@ -22,7 +22,7 @@
             <label for="title" class="form-label">Title</label>
             <input
               type="text"
-              class="from-cotrol"
+              class="form-control"
               id="title"
               th:errorClass="is-invalid"
               th:field="*{title}"
@@ -42,7 +42,7 @@
               name="category"
               id="category"
               th:field="*{category}"
-              class="from-cotrol"
+              class="form-select"
               th:errorClass="is-invalid"
             >
               <option
@@ -69,7 +69,7 @@
               name="user"
               id="user"
               th:field="*{user}"
-              class="from-cotrol"
+              class="form-select"
               th:errorClass="is-invalid"
             >
               <option
@@ -94,7 +94,6 @@
               class="form-control"
               type="text"
               th:field="*{text}"
-              row="4"
               th:errorClass="is-invalid"
             ></textarea>
             <div

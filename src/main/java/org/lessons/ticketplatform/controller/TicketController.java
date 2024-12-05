@@ -58,7 +58,7 @@ public class TicketController {
   public String create(Model model) {
 
     model.addAttribute("ticket", new Ticket());
-    model.addAttribute("users", userRepo.findByRoleNameAndStatus("USER", true).get());
+    model.addAttribute("users", userRepo.findByRoleNameAndStatus("USER", true));
     model.addAttribute("categories", categoryRepo.findAll());
 
     return "tickets/create";
