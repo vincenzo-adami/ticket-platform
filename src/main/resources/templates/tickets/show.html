@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Ticket Details</title>
+  </head>
+  <body>
+    <header>
+      <div th:replace="~{navbar :: navbar}"></div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <dl th:object="${ticket}">
+              <dt>Title</dt>
+              <dd th:text="*{title}"></dd>
+              <dt>Category</dt>
+              <dd th:text="*{category.name}"></dd>
+              <dt>User</dt>
+              <dd th:text="*{user.username}"></dd>
+              <dt>Text</dt>
+              <dd th:text="*{text}"></dd>
+              <dt>Notes</dt>
+              <dd th:unless="*{notes.isEmpty()}">
+                <div class="accordion" id="accordion">
+                  <div class="accordion-item" th:each="note : *{notes}">
+                    <h2 class="accordion-header">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        th:data-bs-target="|#collapse_${note.id}|"
+                        data-bs-parent="accordion"
+                        aria-expanded="false"
+                        th:aria-controls="|collapse_${note.id}|"
+                        th:text="|create by ${note.user.username} at ${note.creationDate}|"
+                      ></button>
+                    </h2>
+                    <div
+                      th:id="|collapse_${note.id}|"
+                      class="accordion-collapse collapse"
+                      data-bs-parent="#accordion"
+                    >
+                      <div class="accordion-body" th:text="${note.text}"></div>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+              <dd th:if="*{notes.isEmpty()}">
+                There aren't notes for this ticket
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>

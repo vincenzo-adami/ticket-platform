@@ -49,9 +49,22 @@
                   <td>
                     <a
                       class="btn btn-primary"
+                      title="Details"
+                      th:href="@{tickets/show/{id}?keyword=key (id=${ticket.id}, key=${keyword})}"
+                      ><i class="fa fa-info"></i
+                    ></a>
+                    <a
+                      class="btn btn-primary"
+                      title="Edit"
                       th:href="@{tickets/edit/{id} (id=${ticket.id})}"
-                      ><i class="fa fa-edit"></i>
-                    </a>
+                      ><i class="fa fa-edit"></i
+                    ></a>
+                    <a
+                      class="btn btn-primary"
+                      title="Add Note"
+                      th:href="@{notes/create/{id} (id=${ticket.id})}"
+                      ><i class="fa fa-notes-medical"></i
+                    ></a>
                   </td>
                 </tr>
               </tbody>

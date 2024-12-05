@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Create a notet</title>
+  </head>
+  <body>
+    <header>
+      <div th:replace="~{navbar :: navbar}"></div>
+    </header>
+    <main>
+      <div class="container">
+        <form
+          id="noteForm"
+          class="row g-3"
+          th:action="@{/notes/store}"
+          th:object="${note}"
+          method="post"
+        >
+          <input type="hidden" th:field="*{ticket.id}" />
+          <div class="col-md-6">
+            <label for="user" class="form-label">User</label>
+            <input
+              type="text"
+              id="user"
+              name="user"
+              class="form-control"
+              th:errorClass="is-invalid"
+              th:field="*{user.id}"
+              th:text="*{user.username}"
+              readonly
+            />
+            <div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('user')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="creationDate" class="form-label">Creation Date</label>
+            <input
+              type="date"
+              class="form-control col-6"
+              id="creationDate"
+              th:errorClass="is-invalid"
+              th:field="*{creationDate}"
+              readonly
+            />
+            <div
+              th:if="${#fields.hasErrors('creationDate')}"
+              class="invalid-feedback"
+            >
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('creationDate')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="text" class="form-label">Description</label>
+            <textarea
+              name="text"
+              id="text"
+              class="form-control"
+              th:field="*{text}"
+              th:errorClass="is-invalid"
+            ></textarea>
+            <div th:if="${#fields.hasErrors('text')}" class="invalid-feedback">
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('text')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-success">
+              Add <i class="fa fa-plus"></i>
+            </button>
+            <a
+              th:href="@{/tickets/show/{id} (id=${note.ticket.id})}"
+              class="btn btn-danger"
+              >Cancel <i class="fa fa-trash"></i
+            ></a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>

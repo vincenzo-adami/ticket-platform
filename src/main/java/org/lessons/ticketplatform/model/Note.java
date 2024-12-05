@@ -1,6 +1,6 @@
 package org.lessons.ticketplatform.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
 public class Note {
@@ -19,17 +20,19 @@ public class Note {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
-  @DateTimeFormat(pattern = "yyyy-MM-dd hh-mm-ss")
-  private LocalDateTime creationDateTime;
+  @NotNull(message = "Creation date cannot be null")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @PastOrPresent(message = "Creation date cannot be futures")
+  private LocalDate creationDate;
 
-  @NotBlank
+  @NotBlank(message = "Description cannot be empty")
   private String text;
 
-  @ManyToOne
+  @ManyToOne()
+  // @NotBlank(message = "User cannot be empty")
   private User user;
 
-  @ManyToOne
+  @ManyToOne()
   private Ticket ticket;
 
   public Long getId() {
@@ -38,14 +41,6 @@ public class Note {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public LocalDateTime getCreationDateTime() {
-    return creationDateTime;
-  }
-
-  public void setCreationDateTime(LocalDateTime creationDateTime) {
-    this.creationDateTime = creationDateTime;
   }
 
   public String getText() {
@@ -70,6 +65,14 @@ public class Note {
 
   public void setTicket(Ticket ticket) {
     this.ticket = ticket;
+  }
+
+  public LocalDate getCreationDate() {
+    return creationDate;
+  }
+
+  public void setCreationDate(LocalDate creationDate) {
+    this.creationDate = creationDate;
   }
 
 }

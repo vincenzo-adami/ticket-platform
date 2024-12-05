@@ -1,14 +1,15 @@
 package org.lessons.ticketplatform.model;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
@@ -28,9 +29,8 @@ public class User {
 
   private boolean status;
 
-  @ManyToOne
-  @JoinColumn()
-  private Role role;
+  @ManyToMany(fetch = FetchType.EAGER)
+  private Set<Role> roles;
 
   @OneToMany(mappedBy = "user")
   private List<Ticket> tickets;
@@ -70,12 +70,20 @@ public class User {
     this.status = status;
   }
 
-  public Role getRole() {
-    return role;
+  public Set<Role> getRoles() {
+    return roles;
   }
 
-  public void setRole(Role role) {
-    this.role = role;
+  public void setRoles(Set<Role> roles) {
+    this.roles = roles;
+  }
+
+  public List<Note> getNotes() {
+    return notes;
+  }
+
+  public void setNotes(List<Note> notes) {
+    this.notes = notes;
   }
 
   public List<Ticket> getTickets() {

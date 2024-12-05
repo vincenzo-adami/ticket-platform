@@ -56,11 +56,28 @@ public class TicketController {
     return "tickets/index";
   }
 
+  @GetMapping("/show/{id}")
+  public String show(@PathVariable Long id, @RequestParam(required = false) String keyword, Model model) {
+    Optional<Ticket> ticketById = ticketRepo.findById(id);
+
+    if (ticketById.isPresent()) {
+      model.addAttribute("ticket", ticketById.get());
+    }
+    model.addAttribute("keyword", keyword);
+    if (keyword == null || keyword.isBlank() || keyword.equals("null")) {
+      model.addAttribute("ticketUrl", "/tickets");
+    } else {
+      model.addAttribute("ticketUrl", "/?keyword=" + keyword);
+    }
+
+    return "tickets/show";
+  }
+
   @GetMapping("/create")
   public String create(Model model) {
 
     model.addAttribute("ticket", new Ticket());
-    model.addAttribute("users", userRepo.findByRoleNameAndStatus("USER", true));
+    model.addAttribute("users", userRepo.findByRolesNameAndStatus("USER", true));
     model.addAttribute("categories", categoryRepo.findAll());
 
     return "tickets/create";
@@ -89,7 +106,7 @@ public class TicketController {
 
     if (byId.isPresent()) {
       model.addAttribute("ticket", byId.get());
-      model.addAttribute("users", userRepo.findByRoleNameAndStatus("USER", true));
+      model.addAttribute("users", userRepo.findByRolesNameAndStatus("USER", true));
       model.addAttribute("categories", categoryRepo.findAll());
     }
 
