@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Status {
+public class Category {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Status {
   @Column(unique = true, length = 10)
   private String name;
 
-  @OneToMany(mappedBy = "status")
+  @OneToMany(mappedBy = "categories")
   private List<Ticket> ticket;
 
   public Long getId() {

@@ -26,7 +26,7 @@ public class Ticket {
   private String text;
 
   @ManyToOne()
-  private Status status;
+  private Category categories;
 
   @ManyToOne()
   private User user;
@@ -58,14 +58,6 @@ public class Ticket {
     this.text = text;
   }
 
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
   public List<Note> getNotes() {
     return notes;
   }
@@ -80,5 +72,13 @@ public class Ticket {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public Category getCategories() {
+    return categories;
+  }
+
+  public void setCategories(Category categories) {
+    this.categories = categories;
   }
 }
