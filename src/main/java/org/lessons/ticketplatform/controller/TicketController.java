@@ -1,6 +1,7 @@
 package org.lessons.ticketplatform.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.repository.CategoryRepository;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
@@ -78,6 +80,36 @@ public class TicketController {
 
     return "redirect:/tickets";
 
+  }
+
+  @GetMapping("/edit/{id}")
+  public String edit(@PathVariable Long id, Model model) {
+
+    Optional<Ticket> byId = ticketRepo.findById(id);
+
+    if (byId.isPresent()) {
+      model.addAttribute("ticket", byId.get());
+      model.addAttribute("users", userRepo.findByRoleNameAndStatus("USER", true));
+      model.addAttribute("categories", categoryRepo.findAll());
+    }
+
+    return "tickets/edit";
+
+  }
+
+  @PostMapping("edit/{id}")
+  public String update(@Valid @ModelAttribute("ticket") Ticket formEditTicket, BindingResult bindingResult, Model model,
+      RedirectAttributes redirectAttributes) {
+
+    if (bindingResult.hasErrors()) {
+      return "tickets/edit";
+    }
+
+    ticketRepo.save(formEditTicket);
+
+    redirectAttributes.addFlashAttribute("updateMsg", "Ticket update");
+
+    return "redirect:/tickets";
   }
 
 }

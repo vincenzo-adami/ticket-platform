@@ -46,7 +46,13 @@
                   <td th:text="${ticket.title}"></td>
                   <td th:text="${ticket.category.name}"></td>
                   <td th:text="${ticket.user.username}"></td>
-                  <td></td>
+                  <td>
+                    <a
+                      class="btn btn-primary"
+                      th:href="@{tickets/edit/{id} (id=${ticket.id})}"
+                      ><i class="fa fa-edit"></i>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>
