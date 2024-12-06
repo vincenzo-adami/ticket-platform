@@ -11,6 +11,48 @@
     <main>
       <div class="container py-3">
         <div class="row">
+          <div th:if="${successMsg != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${successMsg}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${updateMsg != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${updateMsg}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${deleteMsg != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${deleteMsg}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
           <div class="col-12">
             <form th:action="@{/tickets}" method="get">
               <div class="input-group">
@@ -48,7 +90,7 @@
                   <td th:text="${ticket.statusTicket.name}"></td>
                   <td th:text="${ticket.user.username}"></td>
                   <td th:text="${ticket.category.name}"></td>
-                  <td>
+                  <td class="d-flex justify-content-between">
                     <a
                       class="btn btn-primary"
                       title="Details"
@@ -67,6 +109,20 @@
                       th:href="@{notes/create/{id} (id=${ticket.id})}"
                       ><i class="fa fa-notes-medical"></i
                     ></a>
+                    <form
+                      action="#"
+                      th:action="@{tickets/delete/{id} (id=${ticket.id})}"
+                      method="post"
+                    >
+                      <button
+                        class="btn btn-danger"
+                        type="submit"
+                        id="submitButton"
+                        onclick="return confirm('Are you sure?')"
+                      >
+                        <i class="fa fa-trash-alt"></i>
+                      </button>
+                    </form>
                   </td>
                 </tr>
               </tbody>

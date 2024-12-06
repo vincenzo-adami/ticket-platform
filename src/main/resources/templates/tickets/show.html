@@ -11,20 +11,48 @@
     <main>
       <div class="container">
         <div class="row">
-          <div class="col-12">
+          <div th:if="${successMsg != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${successMsg}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${succesNoteMsg != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${succesNoteMsg}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="col-12 my-2">
             <dl th:object="${ticket}">
               <dt>Title</dt>
-              <dd th:text="*{title}"></dd>
+              <dd th:text="*{title}" class="ps-2"></dd>
               <dt>Status Ticket</dt>
-              <dd th:text="*{statusTicket.name}"></dd>
+              <dd th:text="*{statusTicket.name}" class="ps-2"></dd>
               <dt>User</dt>
-              <dd th:text="*{user.username}"></dd>
+              <dd th:text="*{user.username}" class="ps-2"></dd>
               <dt>Category</dt>
-              <dd th:text="*{category.name}"></dd>
+              <dd th:text="*{category.name}" class="ps-2"></dd>
               <dt>Text</dt>
-              <dd th:text="*{text}"></dd>
+              <dd th:text="*{text}" class="ps-2"></dd>
               <dt>Notes</dt>
-              <dd th:unless="*{notes.isEmpty()}">
+              <dd th:unless="*{notes.isEmpty()}" class="mt-2">
                 <div class="accordion" id="accordion">
                   <div class="accordion-item" th:each="note : *{notes}">
                     <h2 class="accordion-header">
@@ -53,6 +81,15 @@
                 There aren't notes for this ticket
               </dd>
             </dl>
+          </div>
+          <div class="col-12 mt-auto">
+            <a
+              class="btn btn-primary"
+              title="Add Note"
+              th:href="@{/notes/create/{id} (id=${ticket.id})}"
+              >Add a note <i class="fa fa-notes-medical"></i
+            ></a>
+            <a th:href="@{/tickets}" class="btn btn-primary">Back to tickets</a>
           </div>
         </div>
       </div>

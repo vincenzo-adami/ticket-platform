@@ -71,7 +71,7 @@ public class NoteController {
 
     noteRepo.save(formNote);
 
-    redirectAttributes.addFlashAttribute("successMsg", "Note create");
+    redirectAttributes.addFlashAttribute("successNoteMsg", "Note create");
 
     return "redirect:/tickets/show/" + formNote.getTicket().getId();
   }

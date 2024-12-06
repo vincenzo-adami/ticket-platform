@@ -20,10 +20,10 @@ public class Ticket {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
+  @NotBlank(message = "Ticket must have a title")
   private String title;
 
-  @NotBlank
+  @NotBlank(message = "Description cannot be blank")
   @Column(length = 1000)
   private String text;
 
