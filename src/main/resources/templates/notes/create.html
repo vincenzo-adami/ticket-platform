@@ -22,13 +22,16 @@
             <label for="user" class="form-label">User</label>
             <input
               type="text"
+              class="form-control"
+              th:value="*{user.username}"
+              readonly
+            />
+            <input
               id="user"
               name="user"
-              class="form-control"
-              th:errorClass="is-invalid"
+              type="hidden"
               th:field="*{user.id}"
-              th:text="*{user.username}"
-              readonly
+              th:errorClass="is-invalid"
             />
             <div th:if="${#fields.hasErrors('user')}" class="invalid-feedback">
               <ul>

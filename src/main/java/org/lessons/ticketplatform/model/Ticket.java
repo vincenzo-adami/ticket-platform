@@ -28,8 +28,8 @@ public class Ticket {
   private String text;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "category_id", nullable = false)
-  private Category category;
+  @JoinColumn(name = "statusTicket_id", nullable = false)
+  private StatusTicket statusTicket;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false)
@@ -37,6 +37,9 @@ public class Ticket {
 
   @OneToMany(mappedBy = "ticket")
   private List<Note> notes;
+
+  @ManyToOne
+  private Category category;
 
   public Long getId() {
     return id;
@@ -78,6 +81,14 @@ public class Ticket {
     this.user = user;
   }
 
+  public StatusTicket getStatusTicket() {
+    return statusTicket;
+  }
+
+  public void setStatusTicket(StatusTicket statusTicket) {
+    this.statusTicket = statusTicket;
+  }
+
   public Category getCategory() {
     return category;
   }
@@ -85,4 +96,5 @@ public class Ticket {
   public void setCategory(Category category) {
     this.category = category;
   }
+
 }

@@ -15,10 +15,12 @@
             <dl th:object="${ticket}">
               <dt>Title</dt>
               <dd th:text="*{title}"></dd>
-              <dt>Category</dt>
-              <dd th:text="*{category.name}"></dd>
+              <dt>Status Ticket</dt>
+              <dd th:text="*{statusTicket.name}"></dd>
               <dt>User</dt>
               <dd th:text="*{user.username}"></dd>
+              <dt>Category</dt>
+              <dd th:text="*{category.name}"></dd>
               <dt>Text</dt>
               <dd th:text="*{text}"></dd>
               <dt>Notes</dt>

@@ -18,7 +18,7 @@
           th:object="${ticket}"
           method="post"
         >
-          <div class="col-md-4">
+          <div class="col-md-6">
             <label for="title" class="form-label">Title</label>
             <input
               type="text"
@@ -36,34 +36,34 @@
               </ul>
             </div>
           </div>
-          <div class="col-md-4">
-            <label for="category" class="form-label">Category</label>
+          <div class="col-md-6">
+            <label for="statusTicket" class="form-label">Status Ticket</label>
             <select
-              name="category"
-              id="category"
-              th:field="*{category}"
+              name="statusTicket"
+              id="statusTicket"
+              th:field="*{statusTicket}"
               class="form-select"
               th:errorClass="is-invalid"
             >
               <option
-                th:each="category : ${categories}"
-                th:value="${category.id}"
-                th:text="${category.name}"
+                th:each="status : ${statusTicket}"
+                th:value="${status.id}"
+                th:text="${status.name}"
               ></option>
             </select>
             <div
               class="invalid-feedback"
-              th:if="${#fields.hasErrors('category')}"
+              th:if="${#fields.hasErrors('statusTicket')}"
             >
               <ul>
                 <li
-                  th:each="err : ${#fields.errors('category')}"
+                  th:each="err : ${#fields.errors('statusTicket')}"
                   th:text="${err}"
                 ></li>
               </ul>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <label for="user" class="form-label">User</label>
             <select
               name="user"
@@ -82,6 +82,33 @@
               <ul>
                 <li
                   th:each="err : ${#fields.errors('user')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="category" class="form-label">Category</label>
+            <select
+              name="category"
+              id="category"
+              th:field="*{category}"
+              class="form-select"
+              th:errorClass="is-invalid"
+            >
+              <option
+                th:each="cat : ${categories}"
+                th:value="${cat.id}"
+                th:text="${cat.name}"
+              ></option>
+            </select>
+            <div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('category')}"
+            >
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('category')}"
                   th:text="${err}"
                 ></li>
               </ul>

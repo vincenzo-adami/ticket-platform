@@ -2,6 +2,7 @@ package org.lessons.ticketplatform.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,17 +11,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Category {
+public class StatusTicket {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank(message = "Category name cannot be blank")
+  @NotBlank
+  @Column(unique = true, length = 30)
   private String name;
 
-  @OneToMany(mappedBy = "category")
-  private List<Ticket> tikcets;
+  @OneToMany(mappedBy = "statusTicket")
+  private List<Ticket> ticket;
 
   public Long getId() {
     return id;
@@ -38,12 +40,11 @@ public class Category {
     this.name = name;
   }
 
-  public List<Ticket> getTikcets() {
-    return tikcets;
+  public List<Ticket> getTicket() {
+    return ticket;
   }
 
-  public void setTikcets(List<Ticket> tikcets) {
-    this.tikcets = tikcets;
+  public void setTicket(List<Ticket> ticket) {
+    this.ticket = ticket;
   }
-
 }

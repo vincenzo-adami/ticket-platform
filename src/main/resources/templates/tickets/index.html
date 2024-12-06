@@ -38,14 +38,16 @@
                   <th>Title</th>
                   <th>Status</th>
                   <th>User</th>
+                  <th>Category</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr th:each="ticket : ${tickets}">
                   <td th:text="${ticket.title}"></td>
-                  <td th:text="${ticket.category.name}"></td>
+                  <td th:text="${ticket.statusTicket.name}"></td>
                   <td th:text="${ticket.user.username}"></td>
+                  <td th:text="${ticket.category.name}"></td>
                   <td>
                     <a
                       class="btn btn-primary"

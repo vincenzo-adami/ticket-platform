@@ -3,7 +3,9 @@ package org.lessons.ticketplatform.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.lessons.ticketplatform.model.Category;
 import org.lessons.ticketplatform.model.Ticket;
+import org.lessons.ticketplatform.repository.StatusTicketRepository;
 import org.lessons.ticketplatform.repository.CategoryRepository;
 import org.lessons.ticketplatform.repository.RoleRepository;
 import org.lessons.ticketplatform.repository.TicketRepository;
@@ -35,6 +37,9 @@ public class TicketController {
 
   @Autowired
   UserRepository userRepo;
+
+  @Autowired
+  StatusTicketRepository statusTicketRepository;
 
   @Autowired
   CategoryRepository categoryRepo;
@@ -78,6 +83,7 @@ public class TicketController {
 
     model.addAttribute("ticket", new Ticket());
     model.addAttribute("users", userRepo.findByRolesNameAndStatus("USER", true));
+    model.addAttribute("statusTicket", statusTicketRepository.findAll());
     model.addAttribute("categories", categoryRepo.findAll());
 
     return "tickets/create";
@@ -107,6 +113,7 @@ public class TicketController {
     if (byId.isPresent()) {
       model.addAttribute("ticket", byId.get());
       model.addAttribute("users", userRepo.findByRolesNameAndStatus("USER", true));
+      model.addAttribute("statusTicket", statusTicketRepository.findAll());
       model.addAttribute("categories", categoryRepo.findAll());
     }
 
