@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title th:text="|Profile of ${user.username}|"></title>
+  </head>
+  <body>
+    <header>
+      <div th:replace="~{navbar :: navbar}"></div>
+    </header>
+    <main>
+      <div class="container py-3">
+        <div class="row">
+          <div th:if="${successMsg != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${successMsg}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${errorMsg != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${successMsg}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <h3 th:text="|Profile of ${user.username}|"></h3>
+          <div class="col-12">
+            <form
+              id="userForm"
+              class="row g-3"
+              th:action="@{/users/update}"
+              th:object="${user}"
+              method="post"
+            >
+              <input type="hidden" th:value="*{username}" />
+              <input type="hidden" th:field="*{roles}" />
+              <input type="hidden" th:field="*{tickets}" />
+              <input type="hidden" th:field="*{notes}" />
+              <div class="col-md-4">
+                <label for="username" class="form-label">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  th:value="*{username}"
+                  readonly
+                />
+                <input
+                  id="username"
+                  type="hidden"
+                  th:field="*{id}"
+                  th:errorClass="is-invalid"
+                />
+                <div
+                  th:if="${#fields.hasErrors('username')}"
+                  class="invalid-feedback"
+                >
+                  <ul>
+                    <li
+                      th:each="err : ${#fields.errors('username')}"
+                      th:text="${err}"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  class="form-control"
+                  th:errorClass="is-invalid"
+                  th:field="*{password}"
+                />
+                <div
+                  th:if="${#fields.hasErrors('password')}"
+                  class="invalid-feedback"
+                >
+                  <ul>
+                    <li
+                      th:each="err : ${#fields.errors('password')}"
+                      th:text="${err}"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="status" class="form-label">Status</label>
+                <select
+                  name="status"
+                  id="status"
+                  th:field="*{status}"
+                  class="form-select"
+                  th:errorClass="is-invalid"
+                >
+                  <option th:value="true" th:text="Avaible"></option>
+                  <option th:value="false" th:text="|Not avaible|"></option>
+                </select>
+                <div
+                  th:if="${#fields.hasErrors('status')}"
+                  class="invalid-feedback"
+                >
+                  <ul>
+                    <li
+                      th:each="err : ${#fields.errors('status')}"
+                      th:text="${err}"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-12">
+                <button
+                  class="btn btn-success"
+                  type="submit"
+                  onclick="return confirm('Are you sure?')"
+                >
+                  Update <i class="fa fa-floppy-disk"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="col-12">
+            <table
+              th:unless="${tickets.isEmpty()}"
+              class="table align-middle table-striped table-sm"
+            >
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="ticket : ${tickets}">
+                  <td th:text="${ticket.title}"></td>
+                  <td th:text="${ticket.statusTicket.name}"></td>
+                  <td th:text="${ticket.category.name}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>

@@ -1,56 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand disabled">MegaCompany</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
-            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-current="tickets dropdown" th:href="@{/tickets}">Tickets</a>
-              <ul class="dropdown-menu">
-                <li class="nav-item">
-                  <a th:href="@{/tickets}" class="nav-link">List tickets</a>
-                </li>
-                <li class="nav-item">
-                  <a th:href="@{/tickets/create}" class="nav-link">
-                    New ticket <i class="fa fa-plus"></i>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <!-- <li class="nav-item">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <nav
+        class="navbar navbar-expand-lg bg-body-tertiary"
+        th:fragment="navbar"
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand disabled">MegaCompany</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+              <li
+                sec:authorize="hasAuthority('ADMIN')"
+                class="nav-item dropdown"
+              >
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-current="tickets dropdown"
+                  th:href="@{/tickets}"
+                  >Tickets</a
+                >
+                <ul class="dropdown-menu">
+                  <li class="nav-item">
+                    <a th:href="@{/tickets}" class="nav-link">List tickets</a>
+                  </li>
+                  <li class="nav-item">
+                    <a th:href="@{/tickets/create}" class="nav-link">
+                      New ticket <i class="fa fa-plus"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- <li class="nav-item">
               <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/ingredients}" class="nav-link">Ingredients</a>
             </li>
             <li sec:authorize="hasAuthority('USER')" class="nav-item">
               <a th:href="@{/pizzas}" class="nav-link">Menu</a>
             </li> -->
-          </ul>
-          <ul class="navbar-nav align-items-baseline">
-            <li class="nav-item">
-              <a href="" class="nav-link active disabled" sec:authentication="name"></a>
-            </li>
-            <li class="nav-item">
-                  <a th:href="@{/logout}" class="nav-link btn text-bg-danger">
-                    <i class="fa fa-sign-out"></i>
-                     Logout
-                  </a>
-              </ul>
-            </li>
-          </ul>
+            </ul>
+            <ul class="navbar-nav align-items-baseline">
+              <li class="nav-item dropdown">
+                <a
+                  href=""
+                  class="nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-current="tickets dropdown"
+                  sec:authentication="name"
+                ></a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item">
+                    <a th:href="@{/users}" class="nav-link text-center"
+                      >Profile</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a th:href="@{/logout}" class="nav-link btn text-bg-danger">
+                      <i class="fa fa-sign-out"></i>
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
-</body>
+      </nav>
+    </header>
+  </body>
 </html>
