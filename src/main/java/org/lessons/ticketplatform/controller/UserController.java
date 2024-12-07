@@ -49,18 +49,19 @@ public class UserController {
   public String update(@Valid @ModelAttribute("user") User userForm, BindingResult bindingResult, Model model,
       RedirectAttributes redirectAttributes, @AuthenticationPrincipal DatabaseUserDetails userDetails) {
 
+    Optional<User> userRedirect = userRepo.findByUsername(userDetails.getUsername());
+    model.addAttribute("user", userRedirect.get());
+
+    List<Ticket> allTickets = ticketRepo.findByUser(userRedirect.get());
+    model.addAttribute("tickets", allTickets);
+
     Optional<User> user = userRepo.findById(userForm.getId());
     if (!user.isPresent()) {
       bindingResult.addError(new FieldError("userNull", "username", "User not found"));
     }
 
     if (bindingResult.hasErrors()) {
-      Optional<User> userRedirect = userRepo.findByUsername(userDetails.getUsername());
-      model.addAttribute("user", userRedirect.get());
-
-      List<Ticket> allTickets = ticketRepo.findByUser(userRedirect.get());
-      model.addAttribute("tickets", allTickets);
-      redirectAttributes.addFlashAttribute("errorMsg", "Somethings go wrong");
+      model.addAttribute("errorMsg", "Somethings go wrong");
 
       return "users/index";
     }
@@ -71,7 +72,7 @@ public class UserController {
 
     redirectAttributes.addFlashAttribute("successMsg", "All is done");
 
-    return "/users";
+    return "redirect:/users";
   }
 
 }

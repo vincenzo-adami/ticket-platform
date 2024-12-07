@@ -27,10 +27,10 @@
           </div>
           <div th:if="${errorMsg != null}">
             <div
-              class="alert alert-success alert-dismissible fade show my-3"
+              class="alert alert-danger alert-dismissible fade show my-3"
               role="alert"
             >
-              <span th:text="${successMsg}"></span>
+              <span th:text="${errorMsg}"></span>
               <button
                 type="button"
                 class="btn-close"
@@ -48,7 +48,7 @@
               th:object="${user}"
               method="post"
             >
-              <input type="hidden" th:value="*{username}" />
+              <input type="hidden" th:field="*{username}" />
               <input type="hidden" th:field="*{roles}" />
               <input type="hidden" th:field="*{tickets}" />
               <input type="hidden" th:field="*{notes}" />
