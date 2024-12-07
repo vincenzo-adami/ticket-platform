@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.lessons.ticketplatform.model.Category;
+import org.lessons.ticketplatform.model.Role;
 import org.lessons.ticketplatform.model.StatusTicket;
 import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.repository.StatusTicketRepository;
@@ -12,8 +13,11 @@ import org.lessons.ticketplatform.repository.NoteRepository;
 import org.lessons.ticketplatform.repository.RoleRepository;
 import org.lessons.ticketplatform.repository.TicketRepository;
 import org.lessons.ticketplatform.repository.UserRepository;
+import org.lessons.ticketplatform.security.DatabaseUserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,15 +56,26 @@ public class TicketController {
 
   // get all ticket
   @GetMapping()
-  public String index(Model model, @RequestParam(required = false) String keyword) {
+  public String index(Model model, @RequestParam(required = false) String keyword,
+      @AuthenticationPrincipal DatabaseUserDetails userDetails) {
 
-    List<Ticket> allTickets;
+    List<Ticket> allTickets = null;
+    if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
 
-    if (keyword != null && !keyword.isBlank()) {
-      allTickets = ticketRepo.findByTitleContaining(keyword);
-      model.addAttribute("keyword", keyword);
-    } else {
-      allTickets = ticketRepo.findAll();
+      if (keyword != null && !keyword.isBlank()) {
+        allTickets = ticketRepo.findByTitleContaining(keyword);
+        model.addAttribute("keyword", keyword);
+      } else {
+        allTickets = ticketRepo.findAll();
+      }
+    }
+    if (!(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))) {
+      if (keyword != null && !keyword.isBlank()) {
+        allTickets = ticketRepo.findTicketsByUserRoleAndTitle(userDetails.getAuthorities().toString(), keyword);
+        model.addAttribute("keyword", keyword);
+      } else {
+        allTickets = ticketRepo.findByUserRoleName(userDetails.getAuthorities().toString());
+      }
     }
 
     model.addAttribute("tickets", allTickets);
