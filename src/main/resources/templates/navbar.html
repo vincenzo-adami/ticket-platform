@@ -48,12 +48,14 @@
                   </li>
                 </ul>
               </li>
-              <!-- <li class="nav-item">
-              <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/ingredients}" class="nav-link">Ingredients</a>
-            </li>
-            <li sec:authorize="hasAuthority('USER')" class="nav-item">
-              <a th:href="@{/pizzas}" class="nav-link">Menu</a>
-            </li> -->
+              <li class="nav-item">
+                <a
+                  sec:authorize="!hasAuthority('ADMIN')"
+                  th:href="@{/tickets}"
+                  class="nav-link"
+                  >Tickets</a
+                >
+              </li>
             </ul>
             <ul class="navbar-nav align-items-baseline">
               <li class="nav-item dropdown">

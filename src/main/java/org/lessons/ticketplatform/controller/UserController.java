@@ -49,20 +49,20 @@ public class UserController {
   public String update(@Valid @ModelAttribute("user") User userForm, BindingResult bindingResult, Model model,
       RedirectAttributes redirectAttributes, @AuthenticationPrincipal DatabaseUserDetails userDetails) {
 
-    Optional<User> userRedirect = userRepo.findByUsername(userDetails.getUsername());
-    model.addAttribute("user", userRedirect.get());
-
-    List<Ticket> allTickets = ticketRepo.findByUser(userRedirect.get());
-    model.addAttribute("tickets", allTickets);
-
-    Optional<User> user = userRepo.findById(userForm.getId());
+    Optional<User> user = userRepo.findByUsername(userDetails.getUsername());
     if (!user.isPresent()) {
-      bindingResult.addError(new FieldError("userNull", "username", "User not found"));
+      bindingResult.addError(new FieldError("user.id", "id", "User not found"));
+    }
+
+    List<Ticket> userTicketByStatus = ticketRepo.findByStatusTicketNameNotAndUserUsername("complete",
+        userDetails.getUsername());
+    if (!(userTicketByStatus.isEmpty()) && !(userForm.isStatus())) {
+      bindingResult.addError(new FieldError("user.status", "status",
+          "Cannot change status because some ticket are not complete"));
     }
 
     if (bindingResult.hasErrors()) {
-      model.addAttribute("errorMsg", "Somethings go wrong");
-
+      model.addAttribute("tickets", ticketRepo.findByUser(user.get()));
       return "users/index";
     }
 
