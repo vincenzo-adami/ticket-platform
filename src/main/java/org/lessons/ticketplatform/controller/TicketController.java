@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.lessons.ticketplatform.model.Category;
-import org.lessons.ticketplatform.model.Role;
 import org.lessons.ticketplatform.model.StatusTicket;
 import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.repository.StatusTicketRepository;
@@ -71,10 +70,10 @@ public class TicketController {
     }
     if (!(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))) {
       if (keyword != null && !keyword.isBlank()) {
-        allTickets = ticketRepo.findTicketsByUserRoleAndTitle(userDetails.getAuthorities().toString(), keyword);
+        allTickets = ticketRepo.findTicketsByUserUsernameAndTitle(userDetails.getUsername(), keyword);
         model.addAttribute("keyword", keyword);
       } else {
-        allTickets = ticketRepo.findByUserRoleName(userDetails.getAuthorities().toString());
+        allTickets = ticketRepo.findByUserUsername(userDetails.getUsername());
       }
     }
 
