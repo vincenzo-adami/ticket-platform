@@ -2,6 +2,8 @@ package org.lessons.ticketplatform.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,16 +31,21 @@ public class Ticket {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "statusTicket_id", nullable = false)
+  @JsonBackReference
   private StatusTicket statusTicket;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false)
+  @JsonBackReference
   private User user;
 
   @OneToMany(mappedBy = "ticket")
+  @JsonBackReference
   private List<Note> notes;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "category_id", nullable = false)
+  @JsonBackReference
   private Category category;
 
   public Long getId() {

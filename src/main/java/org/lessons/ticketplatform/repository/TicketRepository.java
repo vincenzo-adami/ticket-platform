@@ -1,6 +1,7 @@
 package org.lessons.ticketplatform.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.model.User;
@@ -17,4 +18,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByStatusTicketNameNotAndUserUsername(String statusTicket, String username);
 
     List<Ticket> findByUser(User user);
+
+    List<Ticket> findByStatusTicketName(String status);
+
+    List<Ticket> findByCategoryName(String category);
 }

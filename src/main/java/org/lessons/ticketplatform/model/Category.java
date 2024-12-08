@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
@@ -20,7 +21,7 @@ public class Category {
   private String name;
 
   @OneToMany(mappedBy = "category")
-  private List<Ticket> tikcets;
+  private List<Ticket> tickets;
 
   public Long getId() {
     return id;
@@ -38,12 +39,12 @@ public class Category {
     this.name = name;
   }
 
-  public List<Ticket> getTikcets() {
-    return tikcets;
+  public List<Ticket> getTickets() {
+    return tickets;
   }
 
-  public void setTikcets(List<Ticket> tikcets) {
-    this.tikcets = tikcets;
+  public void setTickets(List<Ticket> tickets) {
+    this.tickets = tickets;
   }
 
 }
