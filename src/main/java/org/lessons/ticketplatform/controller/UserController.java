@@ -3,6 +3,7 @@ package org.lessons.ticketplatform.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.lessons.ticketplatform.model.PasswordChanger;
 import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.model.User;
 import org.lessons.ticketplatform.repository.TicketRepository;
@@ -42,6 +43,8 @@ public class UserController {
     List<Ticket> allTickets = ticketRepo.findByUser(user.get());
     model.addAttribute("tickets", allTickets);
 
+    model.addAttribute("passwordChanger", new PasswordChanger());
+
     return "users/index";
   }
 
@@ -63,6 +66,7 @@ public class UserController {
 
     if (bindingResult.hasErrors()) {
       model.addAttribute("tickets", ticketRepo.findByUser(user.get()));
+      model.addAttribute("passwordChanger", new PasswordChanger());
       return "users/index";
     }
 
@@ -74,5 +78,4 @@ public class UserController {
 
     return "redirect:/users";
   }
-
 }

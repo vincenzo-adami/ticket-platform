@@ -16,7 +16,7 @@ public class SecurityConfiguration {
 
     http.authorizeHttpRequests()
         .requestMatchers("/tickets/create", "ticket/delete/**").hasAuthority("ADMIN")
-        .requestMatchers("/tickets", "/notes", "/users")
+        .requestMatchers("/tickets", "/notes", "/users", "/password")
         .hasAnyAuthority("ADMIN", "USER")
         .requestMatchers("/**").permitAll()
         .and().formLogin().and().logout().and().exceptionHandling()
