@@ -41,5 +41,4 @@ public class DatabaseUserDetails implements UserDetails {
   public String getUsername() {
     return this.username;
   }
-
 }

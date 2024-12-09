@@ -34,6 +34,7 @@ public class UserController {
   @Autowired
   TicketRepository ticketRepo;
 
+  // Gett all users
   @GetMapping
   public String index(Model model, @AuthenticationPrincipal DatabaseUserDetails userDetails) {
 
@@ -48,15 +49,18 @@ public class UserController {
     return "users/index";
   }
 
+  // update user info
   @PostMapping("/update")
   public String update(@Valid @ModelAttribute("user") User userForm, BindingResult bindingResult, Model model,
       RedirectAttributes redirectAttributes, @AuthenticationPrincipal DatabaseUserDetails userDetails) {
 
+    // verify if user already exist
     Optional<User> user = userRepo.findByUsername(userDetails.getUsername());
     if (!user.isPresent()) {
       bindingResult.addError(new FieldError("user.id", "id", "User not found"));
     }
 
+    // veirfy if user have some ticket not completed and block update id true
     List<Ticket> userTicketByStatus = ticketRepo.findByStatusTicketNameNotAndUserUsername("complete",
         userDetails.getUsername());
     if (!(userTicketByStatus.isEmpty()) && !(userForm.isStatus())) {
@@ -70,6 +74,7 @@ public class UserController {
       return "users/index";
     }
 
+    // add current encrypt to password
     user.get().setPassword("{noop}" + userForm.getPassword());
     user.get().setStatus(userForm.isStatus());
     userRepo.save(user.get());

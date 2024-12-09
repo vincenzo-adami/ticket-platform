@@ -41,6 +41,7 @@ public class AdministationController {
   @Autowired
   TicketRepository ticketRepo;
 
+  // get all users and all tickets categories
   @GetMapping()
   public String manageIndex(Model model) {
 
@@ -59,16 +60,20 @@ public class AdministationController {
     return "/administration/createUser";
   }
 
+  // ADMIN create a new User
   @PostMapping("/storeUser")
   public String storeUser(@Valid @ModelAttribute("user") User userForm, BindingResult bindingResult, Model model,
       RedirectAttributes redirectAttributes) {
 
+    // added error if username already exist
     List<User> findAll = userRepo.findAll();
     for (User user : findAll) {
       if (user.getUsername().equals(userForm.getUsername())) {
         bindingResult.addError(new FieldError("user", "username", "This Username already exist"));
       }
     }
+
+    // added error if don't chose a role
     if (userForm.getRoles().isEmpty()) {
       bindingResult.addError(new FieldError("role", "roles", "Roles cannnot be blank. Chose one at least"));
     }
@@ -90,6 +95,7 @@ public class AdministationController {
 
     Optional<User> userById = userRepo.findById(id);
     if (userById.isPresent()) {
+      // remove encryot algorithm from password before pass to model
       userById.get().setPassword(userById.get().getPassword().substring(6));
       model.addAttribute("user", userById.get());
       model.addAttribute("allRoles", roleRepo.findAll());
@@ -101,6 +107,7 @@ public class AdministationController {
   public String updateUser(@Valid @ModelAttribute("user") User userForm, BindingResult bindingResult, Model model,
       RedirectAttributes redirectAttributes, @PathVariable Long id) {
 
+    // added error if username is different from the chosen one or don't exist
     Optional<User> findById = userRepo.findById(id);
     if (findById.isPresent()) {
       if (!(userForm.getId() == findById.get().getId())) {
@@ -110,10 +117,15 @@ public class AdministationController {
       bindingResult.addError(new FieldError("user", "username", "This username dosen't exist"));
     }
 
+    // added error if don't chose a role
     if (userForm.getRoles().isEmpty()) {
       bindingResult.addError(new FieldError("role", "roles", "Roles cannnot be blank. Chose one at least"));
     }
 
+    /*
+     * added error if try to change user statu to Not Avaible if they have some
+     * ticket with status different to complete
+     */
     List<Ticket> userTicketByStatus = ticketRepo.findByStatusTicketNameNotAndUserUsername("complete",
         userForm.getUsername());
     if (!(userTicketByStatus.isEmpty()) && !(userForm.isStatus())) {
@@ -148,8 +160,8 @@ public class AdministationController {
   public String storeCategory(@Valid @ModelAttribute("category") Category categoryForm, BindingResult bindingResult,
       Model model, RedirectAttributes redirectAttributes) {
 
+    // added error if new category already exist
     List<Category> findAll = categoryRepo.findAll();
-
     for (Category category : findAll) {
       if (category.getName().equals(categoryForm.getName())) {
         bindingResult.addError(new FieldError("category", "name", "This category already exist"));
@@ -179,8 +191,8 @@ public class AdministationController {
   public String updateCategory(@Valid @ModelAttribute("category") Category categoryForm, BindingResult bindingResult,
       Model model, RedirectAttributes redirectAttributes, @PathVariable Long id) {
 
+    // added an error if the category chosen to update already exists
     List<Category> findAll = categoryRepo.findAll();
-
     for (Category category : findAll) {
       if (category.getName().equals(categoryForm.getName())) {
         bindingResult.addError(new FieldError("category", "name", "This category already exist"));
@@ -205,5 +217,4 @@ public class AdministationController {
 
     return "redirect:/administration";
   }
-
 }

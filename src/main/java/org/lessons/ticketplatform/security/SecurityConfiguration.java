@@ -15,8 +15,10 @@ public class SecurityConfiguration {
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
     http.authorizeHttpRequests()
-        .requestMatchers("/tickets/create", "ticket/delete/**").hasAuthority("ADMIN")
-        .requestMatchers("/administration", "/administration/**").hasAuthority("ADMIN")
+        .requestMatchers("/tickets/create", "ticket/delete/**")
+        .hasAuthority("ADMIN")
+        .requestMatchers("/administration", "/administration/**")
+        .hasAuthority("ADMIN")
         .requestMatchers("/tickets", "/notes", "/users", "/password")
         .hasAnyAuthority("ADMIN", "USER")
         .requestMatchers("/**").permitAll()
@@ -24,7 +26,6 @@ public class SecurityConfiguration {
         .and().csrf().disable();
 
     return http.build();
-
   }
 
   @Bean

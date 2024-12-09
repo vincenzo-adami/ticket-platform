@@ -58,9 +58,11 @@ public class TicketController {
   public String index(Model model, @RequestParam(required = false) String keyword,
       @AuthenticationPrincipal DatabaseUserDetails userDetails) {
 
+    // get all tickets if logged user has ADMIN authority
     List<Ticket> allTickets = null;
     if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
 
+      // filter ticket by keyword
       if (keyword != null && !keyword.isBlank()) {
         allTickets = ticketRepo.findByTitleContaining(keyword);
         model.addAttribute("keyword", keyword);
@@ -68,7 +70,11 @@ public class TicketController {
         allTickets = ticketRepo.findAll();
       }
     }
+
+    // get all ticket of the current logged user if don't have ADMIN authority
     if (!(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))) {
+
+      // filter ticket by keyword
       if (keyword != null && !keyword.isBlank()) {
         allTickets = ticketRepo.findTicketsByUserUsernameAndTitle(userDetails.getUsername(), keyword);
         model.addAttribute("keyword", keyword);
@@ -117,21 +123,22 @@ public class TicketController {
   public String store(@Valid @ModelAttribute("ticket") Ticket formTicket,
       BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
+    // add error if user select don't exist
     if (!formTicket.getUser().isStatus()) {
       bindingResult.addError(new FieldError("notAvaible", "user", "User not avaible, chose another one"));
     }
 
+    // add error if statuTicket don't exist
     List<StatusTicket> findAllStatusTicket = statusTicketRepository.findAll();
-
     if (!findAllStatusTicket.contains(formTicket.getStatusTicket())) {
-      bindingResult.addError(new FieldError("statusNotFound", "statusTicket", "Chose a valid Status for TIcket"));
+      bindingResult.addError(new FieldError("statusNotFound", "statusTicket", "Chose a valid Status for Ticket"));
       model.addAttribute("statusTicket", findAllStatusTicket);
     }
 
+    // add error if category don't exist
     List<Category> findAllCategory = categoryRepo.findAll();
-
     if (!findAllCategory.contains(formTicket.getCategory())) {
-      bindingResult.addError(new FieldError("categoryNotFound", "category", "Chose a valid Category for TIcket"));
+      bindingResult.addError(new FieldError("categoryNotFound", "category", "Chose a valid Category for Ticket"));
       model.addAttribute("category", findAllCategory);
     }
 

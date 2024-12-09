@@ -38,11 +38,15 @@ public class PasswordController {
       BindingResult bindingResult, Model model,
       @AuthenticationPrincipal DatabaseUserDetails userDetails, RedirectAttributes redirectAttributes) {
 
-    System.out.println(userDetails.getPassword().substring(5));
+    // add error to actual password if not equals to one in db
     if (!(changePasswordForm.getActualPassword().equals(userDetails.getPassword().substring(6)))) {
       bindingResult.addError(new FieldError("changePasswordForm", "actualPassword", "Actual Password is different"));
     }
 
+    /*
+     * add error to confirmPassword if newPassword is not equals to
+     * confirmNewPassword
+     */
     if (!changePasswordForm.getConfirmNewPassword().equals(changePasswordForm.getNewPassword())) {
       bindingResult
           .addError(new FieldError("changePasswordForm", "confirmNewPassword", "New Password are not matching"));
@@ -59,6 +63,7 @@ public class PasswordController {
 
     User userByUsername = userRepo.findByUsername(userDetails.getUsername()).get();
 
+    // add chosen encrypt to password
     userByUsername.setPassword("{noop}" + changePasswordForm.getConfirmNewPassword());
 
     userRepo.save(userByUsername);
