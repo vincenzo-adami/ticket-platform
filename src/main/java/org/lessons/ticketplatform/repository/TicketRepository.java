@@ -1,7 +1,6 @@
 package org.lessons.ticketplatform.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.model.User;

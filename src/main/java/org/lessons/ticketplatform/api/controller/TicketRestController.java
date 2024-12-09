@@ -1,7 +1,6 @@
 package org.lessons.ticketplatform.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.lessons.ticketplatform.api.model.Payload;
 import org.lessons.ticketplatform.model.Ticket;
