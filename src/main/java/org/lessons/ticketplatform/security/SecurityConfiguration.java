@@ -16,6 +16,7 @@ public class SecurityConfiguration {
 
     http.authorizeHttpRequests()
         .requestMatchers("/tickets/create", "ticket/delete/**").hasAuthority("ADMIN")
+        .requestMatchers("/administration", "/administration/**").hasAuthority("ADMIN")
         .requestMatchers("/tickets", "/notes", "/users", "/password")
         .hasAnyAuthority("ADMIN", "USER")
         .requestMatchers("/**").permitAll()

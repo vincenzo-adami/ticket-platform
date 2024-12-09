@@ -15,6 +15,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -32,6 +33,7 @@ public class User {
 
   private boolean status;
 
+  @NotNull(message = "Roles cannot be null")
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
@@ -97,5 +99,4 @@ public class User {
   public void setTickets(List<Ticket> tickets) {
     this.tickets = tickets;
   }
-
 }

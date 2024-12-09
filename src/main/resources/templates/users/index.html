@@ -39,54 +39,6 @@
               th:object="${user}"
               method="post"
             >
-              <!-- <input type="hidden" th:field="*{roles}" />
-              <input type="hidden" th:field="*{tickets}" />
-              <input type="hidden" th:field="*{notes}" />
-              <div class="col-md-4">
-                <label for="username" class="form-label">Username</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  th:field="*{username}"
-                  readonly
-                />
-                <input
-                  type="hidden"
-                  th:field="*{id}"
-                  th:errorClass="is-invalid"
-                />
-                <div
-                  th:if="${#fields.hasErrors('id')}"
-                  class="invalid-feedback"
-                >
-                  <ul>
-                    <li
-                      th:each="err : ${#fields.errors('id')}"
-                      th:text="${err}"
-                    ></li>
-                  </ul>
-                </div>
-              </div> -->
-              <!-- <div class="col-md-4">
-                <label for="password" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  th:errorClass="is-invalid"
-                  th:field="*{password}"
-                />
-                <div
-                  th:if="${#fields.hasErrors('password')}"
-                  class="invalid-feedback"
-                >
-                  <ul>
-                    <li
-                      th:each="err : ${#fields.errors('password')}"
-                      th:text="${err}"
-                    ></li>
-                  </ul>
-                </div>
-              </div> -->
               <div class="col-md-4">
                 <label for="status" class="form-label">Status</label>
                 <select
@@ -255,6 +207,13 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div
+            class="alert alert-warning"
+            role="alert"
+            th:if="${tickets.isEmpty()}"
+          >
+            You don't have any tickets
           </div>
         </div>
       </div>

@@ -123,10 +123,14 @@
               th:field="*{text}"
               th:errorClass="is-invalid"
             ></textarea>
-            <div
-              class="invalid-feedback"
-              th:if="${#fields.hasErrors('text')}"
-            ></div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('text')}">
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('text')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
           </div>
           <div class="col-12">
             <button class="btn btn-success" type="submit">

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Edit User</title>
+  </head>
+  <body>
+    <header>
+      <div th:replace="~{navbar :: navbar}"></div>
+    </header>
+    <main>
+      <div class="container">
+        <h3>Edit User</h3>
+        <form
+          th:action="@{/administration/updateUser/{id} (id=${user.id})}"
+          class="row g-3"
+          id="ticket-form"
+          th:object="${user}"
+          method="post"
+        >
+          <div class="col-md-6">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="email"
+              class="form-control"
+              th:field="*{username}"
+              th:errorClass="is-invalid"
+            />
+            <div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('username')}"
+            >
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('username')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              <input
+                id="password"
+                type="password"
+                class="form-control"
+                th:field="*{password}"
+                th:errorClass="is-invalid"
+              />
+              <i
+                class="input-group-text fa fa-eye"
+                id="togglePassword"
+                style="cursor: pointer"
+              ></i>
+              <div
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('password')}"
+              >
+                <ul>
+                  <li
+                    th:each="err : ${#fields.errors('password')}"
+                    th:text="${err}"
+                  ></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <p class="form-label">Roles</p>
+            <div
+              class="form-check form-check-inline"
+              th:each="role : ${allRoles}"
+            >
+              <input
+                type="checkbox"
+                class="form-check-input"
+                th:id="|role_${role.id}|"
+                th:value="${role.id}"
+                th:field="*{roles}"
+                th:errorClass="is-invalid"
+              />
+              <label
+                th:for="|role_${role.id}|"
+                class="form-check-label"
+                th:text="${role.name}"
+                >Roles</label
+              >
+              <div
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('roles')}"
+              >
+                <ul>
+                  <li
+                    th:each="err : ${#fields.errors('roles')}"
+                    th:text="${err}"
+                  ></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="status" class="form-label">Status</label>
+            <select
+              th:field="*{status}"
+              class="form-select"
+              th:errorClass="is-invalid"
+            >
+              <option th:value="true" th:selected="*{status == true}">
+                Available
+              </option>
+              <option th:value="false" th:selected="*{status == false}">
+                Not Available
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('status')}"
+            >
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('status')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <button
+              class="btn btn-success"
+              type="submit"
+              onclick="return confirm('Are you sure?')"
+            >
+              Update <i class="fa fa-plus"></i>
+            </button>
+            <a th:href="@{/administration}" class="btn btn-danger">
+              Cancel <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </form>
+      </div>
+    </main>
+    <script src="/script.js"></script>
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>

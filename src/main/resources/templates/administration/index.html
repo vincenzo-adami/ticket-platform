@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Administration Dashbord</title>
+  </head>
+  <body>
+    <header>
+      <div th:replace="~{navbar :: navbar}"></div>
+    </header>
+    <main>
+      <div class="container">
+        <h1 class="text-center">Administration Dashbord</h1>
+        <div class="row">
+          <div th:if="${userCreate != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${userCreate}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${updateUser != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${updateUser}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${categoryCreate != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${categoryCreate}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${categoryUpdate != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${categoryUpdate}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div th:if="${deleteCategory != null}">
+            <div
+              class="alert alert-success alert-dismissible fade show my-3"
+              role="alert"
+            >
+              <span th:text="${deleteCategory}"></span>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <h2 class="h5">Platform Users</h2>
+            <a th:href="@{/administration/createUser}" class="btn btn-primary">
+              New User <i class="fa fa-plus"></i>
+            </a>
+            <table th:unless="${users.isEmpty()}" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="user : ${users}">
+                  <td th:text="${user.username}"></td>
+                  <td>
+                    <th:block th:each="u : ${user}">
+                      <th:block
+                        th:each="role : ${u.roles}"
+                        th:text="|${role.name} |"
+                      ></th:block>
+                    </th:block>
+                  </td>
+                  <td th:text="${user.status}? 'Avaible' : 'Not Avaible'"></td>
+                  <td>
+                    <div class="d-flex justify-content-around">
+                      <a
+                        title="Edit"
+                        th:href="@{administration/editUser/{id} (id=${user.id})}"
+                        class="btn btn-primary"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="col-md-7 alert alert-warning"
+            role="alert"
+            th:if="${users.isEmpty()}"
+          >
+            There are no users in the database
+          </div>
+          <div class="col-md-5">
+            <h2 class="h5">Tickets Categories</h2>
+            <a
+              th:href="@{/administration/createCategory}"
+              class="btn btn-primary"
+            >
+              New Category <i class="fa fa-plus"></i>
+            </a>
+            <table
+              th:unless="${categories.isEmpty()}"
+              class="table table-striped"
+            >
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="category : ${categories}">
+                  <td th:text="${category.name}"></td>
+                  <td>
+                    <div class="d-flex justify-content-around">
+                      <a
+                        title="Edit"
+                        th:href="@{administration/editCategory/{id} (id=${category.id})}"
+                        class="btn btn-primary"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </a>
+                      <form
+                        sec:authorize="hasAuthority('ADMIN')"
+                        action="#"
+                        th:action="@{administration/deleteCategory/{id} (id=${category.id})}"
+                        method="post"
+                      >
+                        <button
+                          class="btn btn-danger"
+                          type="submit"
+                          id="submitButton"
+                          onclick="return confirm('Are you sure?')"
+                        >
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="col-md-5 alert alert-warning"
+            role="alert"
+            th:if="${categories.isEmpty()}"
+          >
+            There are no category in the database
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>

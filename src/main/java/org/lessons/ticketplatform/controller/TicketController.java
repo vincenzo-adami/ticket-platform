@@ -173,6 +173,9 @@ public class TicketController {
       RedirectAttributes redirectAttributes) {
 
     if (bindingResult.hasErrors()) {
+      model.addAttribute("users", userRepo.findByRolesNameAndStatus("USER", true));
+      model.addAttribute("statusTicket", statusTicketRepository.findAll());
+      model.addAttribute("categories", categoryRepo.findAll());
       return "tickets/edit";
     }
 
@@ -194,5 +197,4 @@ public class TicketController {
 
     return "redirect:/tickets";
   }
-
 }

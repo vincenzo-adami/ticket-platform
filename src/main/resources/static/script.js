@@ -1,28 +1,25 @@
-const toggleActualPassword = document.querySelector('#toggleActualPassword');
-const toggleNewPassword = document.querySelector('#toggleNewPassword');
-const toggleConfirmNewPassword = document.querySelector('#toggleConfirmNewPassword');
+function togglePasswordVisibility(toggleButtonSelector, inputSelector) {
+  let toggleButton = document.querySelector(toggleButtonSelector);
+  let inputField = document.querySelector(inputSelector);
 
-const actualPassword = document.querySelector('#actualPassword');
-const newPassword = document.querySelector('#newPassword');
-const confirmeNewPassword = document.querySelector('#confirmNewPassword');
+  toggleButton.addEventListener('click', function () {
+    let type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
+    inputField.setAttribute('type', type);
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+  });
+}
 
-toggleActualPassword.addEventListener('click', function (e) {
-  const type = actualPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-  actualPassword.setAttribute('type', type);
-  this.classList.toggle('fa-eye');  
-  this.classList.toggle('fa-eye-slash');
-});
 
-toggleNewPassword.addEventListener('click', function (e) {
-  const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-  newPassword.setAttribute('type', type);
-  this.classList.toggle('fa-eye');
-  this.classList.toggle('fa-eye-slash');
-});
-
-toggleConfirmNewPassword.addEventListener('click', function (e) {
-  const type = confirmeNewPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-  confirmeNewPassword.setAttribute('type', type);
-  this.classList.toggle('fa-eye');
-  this.classList.toggle('fa-eye-slash');
-});
+if(document.querySelector('#toggleActualPassword')) {
+  togglePasswordVisibility('#toggleActualPassword', '#actualPassword');
+}
+if(document.querySelector('#toggleNewPassword')) {
+  togglePasswordVisibility('#toggleNewPassword', '#newPassword');
+}
+if(document.querySelector('#toggleConfirmNewPassword')) {
+  togglePasswordVisibility('#toggleConfirmNewPassword', '#confirmNewPassword');
+}
+if(document.querySelector('#togglePassword')) {
+  togglePasswordVisibility('#togglePassword', '#password');
+}

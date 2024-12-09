@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments :: head}"></div>
+    <title>Create a Category</title>
+  </head>
+  <body>
+    <header>
+      <div th:replace="~{navbar :: navbar}"></div>
+    </header>
+    <main>
+      <div class="container">
+        <h3>Create a Category</h3>
+        <form
+          th:action="@{/administration/storeCategory}"
+          class="row g-3"
+          id="ticket-form"
+          th:object="${category}"
+          method="post"
+        >
+          <div class="col-12">
+            <label for="name" class="form-label">Category name</label>
+            <input
+              type="text"
+              class="form-control"
+              th:field="*{name}"
+              th:errorClass="is-invalid"
+            />
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+              <ul>
+                <li
+                  th:each="err : ${#fields.errors('name')}"
+                  th:text="${err}"
+                ></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-success">
+              Add <i class="fa fa-plus"></i>
+            </button>
+            <a th:href="@{/administration}" class="btn btn-danger"
+              >Cancel <i class="fa fa-trash"> </i
+            ></a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <div th:replace="~{fragments :: bsScript}"></div>
+  </body>
+</html>
