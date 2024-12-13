@@ -13,13 +13,16 @@
 	<artifactId>ticketplatform</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ticketplatform</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Final project for Boolean BEPT#3 course</description>
 	<url/>
 	<licenses>
 		<license/>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+			<id>FaolinZF</id>
+			<name>Vincenzo Adami</name>
+		</developer>
 	</developers>
 	<scm>
 		<connection/>
