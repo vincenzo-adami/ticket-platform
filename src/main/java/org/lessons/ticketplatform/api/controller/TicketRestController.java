@@ -57,7 +57,7 @@ public class TicketRestController {
 
       }
 
-      throw new Exception("CAtegory not found");
+      throw new Exception("Category not found");
 
     } catch (Exception e) {
       return new ResponseEntity<Payload<List<Ticket>>>(

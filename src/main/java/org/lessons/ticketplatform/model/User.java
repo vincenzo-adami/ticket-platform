@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -25,6 +26,7 @@ public class User {
   private Long id;
 
   @NotBlank(message = "username cannot be blank")
+  @Email(message = "username must be an email")
   @Column(length = 50, unique = true)
   private String username;
 
