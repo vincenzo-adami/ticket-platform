@@ -21,6 +21,8 @@ public class SecurityConfiguration {
         .hasAuthority("ADMIN")
         .requestMatchers("/tickets", "/notes", "/users", "/password")
         .hasAnyAuthority("ADMIN", "USER")
+        .requestMatchers("/tickets/**", "/notes/**", "/users/**", "/password/**")
+        .hasAnyAuthority("ADMIN", "USER")
         .requestMatchers("/**").permitAll()
         .and().formLogin().and().logout().and().exceptionHandling()
         .and().csrf().disable();
