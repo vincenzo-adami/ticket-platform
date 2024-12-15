@@ -9,7 +9,6 @@ import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.repository.StatusTicketRepository;
 import org.lessons.ticketplatform.repository.CategoryRepository;
 import org.lessons.ticketplatform.repository.NoteRepository;
-import org.lessons.ticketplatform.repository.RoleRepository;
 import org.lessons.ticketplatform.repository.TicketRepository;
 import org.lessons.ticketplatform.repository.UserRepository;
 import org.lessons.ticketplatform.security.DatabaseUserDetails;
@@ -36,22 +35,19 @@ import jakarta.validation.Valid;
 public class TicketController {
 
   @Autowired
-  TicketRepository ticketRepo;
+  private TicketRepository ticketRepo;
 
   @Autowired
-  RoleRepository roleRepo;
+  private UserRepository userRepo;
 
   @Autowired
-  UserRepository userRepo;
+  private StatusTicketRepository statusTicketRepository;
 
   @Autowired
-  StatusTicketRepository statusTicketRepository;
+  private NoteRepository noteRepo;
 
   @Autowired
-  NoteRepository noteRepo;
-
-  @Autowired
-  CategoryRepository categoryRepo;
+  private CategoryRepository categoryRepo;
 
   // get all ticket
   @GetMapping()

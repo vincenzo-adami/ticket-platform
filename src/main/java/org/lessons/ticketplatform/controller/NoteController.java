@@ -31,13 +31,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class NoteController {
 
   @Autowired
-  UserRepository userRepo;
+  private UserRepository userRepo;
 
   @Autowired
-  NoteRepository noteRepo;
+  private NoteRepository noteRepo;
 
   @Autowired
-  TicketRepository ticketRepo;
+  private TicketRepository ticketRepo;
 
   @GetMapping("/create/{id}")
   public String create(Model model, @AuthenticationPrincipal DatabaseUserDetails userDetails, @PathVariable Long id) {

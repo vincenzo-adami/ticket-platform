@@ -29,10 +29,10 @@ import jakarta.validation.Valid;
 public class UserController {
 
   @Autowired
-  UserRepository userRepo;
+  private UserRepository userRepo;
 
   @Autowired
-  TicketRepository ticketRepo;
+  private TicketRepository ticketRepo;
 
   // Gett all users
   @GetMapping

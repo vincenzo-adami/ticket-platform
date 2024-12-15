@@ -30,16 +30,16 @@ import jakarta.validation.Valid;
 public class AdministationController {
 
   @Autowired
-  UserRepository userRepo;
+  private UserRepository userRepo;
 
   @Autowired
-  RoleRepository roleRepo;
+  private RoleRepository roleRepo;
 
   @Autowired
-  CategoryRepository categoryRepo;
+  private CategoryRepository categoryRepo;
 
   @Autowired
-  TicketRepository ticketRepo;
+  private TicketRepository ticketRepo;
 
   // get all users and all tickets categories
   @GetMapping()

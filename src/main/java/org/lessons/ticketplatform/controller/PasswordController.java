@@ -28,10 +28,10 @@ import jakarta.validation.Valid;
 public class PasswordController {
 
   @Autowired
-  UserRepository userRepo;
+  private UserRepository userRepo;
 
   @Autowired
-  TicketRepository ticketRepo;
+  private TicketRepository ticketRepo;
 
   @PostMapping("/change")
   public String changePassword(@Valid @ModelAttribute("passwordChanger") PasswordChanger changePasswordForm,
