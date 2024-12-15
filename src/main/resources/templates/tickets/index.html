@@ -70,7 +70,7 @@
               </div>
             </form>
           </div>
-          <div class="col-12">
+          <div class="col-12 table-responsive">
             <table
               th:unless="${tickets.isEmpty()}"
               class="table align-middle table-striped"
@@ -78,37 +78,57 @@
               <thead>
                 <tr>
                   <th>Title</th>
-                  <th>Status</th>
-                  <th sec:authorize="hasAuthority('ADMIN')">User</th>
-                  <th>Category</th>
+                  <th class="d-none d-md-table-cell">Status</th>
+                  <th
+                    sec:authorize="hasAuthority('ADMIN')"
+                    class="d-none d-md-table-cell"
+                  >
+                    User
+                  </th>
+                  <th class="d-none d-md-table-cell">Category</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr th:each="ticket : ${tickets}">
-                  <td th:text="${ticket.title}"></td>
-                  <td class="col-2" th:text="${ticket.statusTicket.name}"></td>
                   <td
+                    th:text="${ticket.title}"
+                    class="text-truncate"
+                    style="max-width: 150px"
+                  ></td>
+                  <td
+                    class="col-2 text-truncate d-none d-md-table-cell"
+                    th:text="${ticket.statusTicket.name}"
+                    style="max-width: 150px"
+                  ></td>
+                  <td
+                    class="d-none d-md-table-cell text-truncate"
                     th:text="${ticket.user.username}"
                     sec:authorize="hasAuthority('ADMIN')"
+                    style="max-width: 150px"
                   ></td>
-                  <td class="col-3" th:text="${ticket.category.name}"></td>
+                  <td
+                    class="col-3 d-none d-md-table-cell text-truncate"
+                    style="max-width: 150px"
+                    th:text="${ticket.category.name}"
+                  ></td>
                   <td class="col-2">
-                    <div class="d-flex justify-content-around">
+                    <div class="d-flex flex-wrap justify-content-around">
                       <a
-                        class="btn btn-primary"
+                        class="btn btn-primary btn-sm mb-1"
+                        style="width: 32px"
                         title="Details"
-                        th:href="@{tickets/show/{id}?keyword=key (id=${ticket.id}, key=${keyword})}"
+                        th:href="@{tickets/show/{id}?keyword={key} (id=${ticket.id}, key=${keyword})}"
                         ><i class="fa fa-info"></i
                       ></a>
                       <a
-                        class="btn btn-primary"
+                        class="btn btn-primary btn-sm mb-1"
                         title="Edit"
                         th:href="@{tickets/edit/{id} (id=${ticket.id})}"
                         ><i class="fa fa-edit"></i
                       ></a>
                       <a
-                        class="btn btn-primary"
+                        class="btn btn-primary btn-sm mb-1"
                         title="Add Note"
                         th:href="@{notes/create/{id} (id=${ticket.id})}"
                         ><i class="fa fa-notes-medical"></i
@@ -120,7 +140,8 @@
                         method="post"
                       >
                         <button
-                          class="btn btn-danger"
+                          class="btn btn-danger btn-sm"
+                          style="width: 32px"
                           type="submit"
                           id="submitButton"
                           onclick="return confirm('Are you sure?')"

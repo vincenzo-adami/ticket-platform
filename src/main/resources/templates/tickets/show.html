@@ -89,7 +89,11 @@
               th:href="@{/notes/create/{id} (id=${ticket.id})}"
               >Add a note <i class="fa fa-notes-medical"></i
             ></a>
-            <a th:href="@{/tickets}" class="btn btn-primary">Back to tickets</a>
+            <a
+              th:href="@{/tickets?keyword={key}(key=${keyword})}"
+              class="btn btn-primary"
+              >Back to tickets</a
+            >
           </div>
         </div>
       </div>

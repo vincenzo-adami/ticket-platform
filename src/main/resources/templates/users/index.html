@@ -186,7 +186,7 @@
             </form>
           </div>
           <hr class="my-4" />
-          <div class="col-12">
+          <div class="col-12 table-responsive">
             <h2 class="h4">Your Ticket</h2>
             <table
               th:unless="${tickets.isEmpty()}"
@@ -201,9 +201,21 @@
               </thead>
               <tbody>
                 <tr th:each="ticket : ${tickets}">
-                  <td th:text="${ticket.title}"></td>
-                  <td th:text="${ticket.statusTicket.name}"></td>
-                  <td th:text="${ticket.category.name}"></td>
+                  <td
+                    th:text="${ticket.title}"
+                    class="text-truncate"
+                    style="max-width: 150px"
+                  ></td>
+                  <td
+                    th:text="${ticket.statusTicket.name}"
+                    class="text-truncate"
+                    style="max-width: 150px"
+                  ></td>
+                  <td
+                    th:text="${ticket.category.name}"
+                    class="text-truncate"
+                    style="max-width: 150px"
+                  ></td>
                 </tr>
               </tbody>
             </table>

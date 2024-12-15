@@ -69,10 +69,9 @@ public class TicketController {
       } else {
         allTickets = ticketRepo.findAll();
       }
-    }
+    } else {
 
-    // get all ticket of the current logged user if don't have ADMIN authority
-    if (!(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))) {
+      // get all ticket of the current logged user if don't have ADMIN authority
 
       // filter ticket by keyword
       if (keyword != null && !keyword.isBlank()) {
@@ -123,19 +122,19 @@ public class TicketController {
   public String store(@Valid @ModelAttribute("ticket") Ticket formTicket,
       BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
-    // add error if user select don't exist
+    // add error if user selected doesn't exist
     if (!formTicket.getUser().isStatus()) {
       bindingResult.addError(new FieldError("notAvaible", "user", "User not avaible, chose another one"));
     }
 
-    // add error if statuTicket don't exist
+    // add error if statuTicket selected doesn't exist
     List<StatusTicket> findAllStatusTicket = statusTicketRepository.findAll();
     if (!findAllStatusTicket.contains(formTicket.getStatusTicket())) {
       bindingResult.addError(new FieldError("statusNotFound", "statusTicket", "Chose a valid Status for Ticket"));
       model.addAttribute("statusTicket", findAllStatusTicket);
     }
 
-    // add error if category don't exist
+    // add error if category selected doesn't exist
     List<Category> findAllCategory = categoryRepo.findAll();
     if (!findAllCategory.contains(formTicket.getCategory())) {
       bindingResult.addError(new FieldError("categoryNotFound", "category", "Chose a valid Category for Ticket"));
@@ -159,13 +158,17 @@ public class TicketController {
 
   // get ticket edit page
   @GetMapping("/edit/{id}")
-  public String edit(@PathVariable Long id, Model model) {
+  public String edit(@PathVariable Long id, Model model, @AuthenticationPrincipal DatabaseUserDetails userDetails) {
 
     Optional<Ticket> byId = ticketRepo.findById(id);
 
     if (byId.isPresent()) {
       model.addAttribute("ticket", byId.get());
-      model.addAttribute("users", userRepo.findByRolesNameAndStatus("USER", true));
+      if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+        model.addAttribute("users", userRepo.findByRolesNameAndStatus("USER", true));
+      } else {
+        model.addAttribute("users", userRepo.findByUsername(userDetails.getUsername()).get());
+      }
       model.addAttribute("statusTicket", statusTicketRepository.findAll());
       model.addAttribute("categories", categoryRepo.findAll());
     }
