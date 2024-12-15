@@ -15,7 +15,7 @@ public class SecurityConfiguration {
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
     http.authorizeHttpRequests()
-        .requestMatchers("/tickets/create", "ticket/delete/**")
+        .requestMatchers("/tickets/create", "ticket/delete/**", "tickets/store")
         .hasAuthority("ADMIN")
         .requestMatchers("/administration", "/administration/**")
         .hasAuthority("ADMIN")
