@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.lessons.ticketplatform.model.Category;
+import org.lessons.ticketplatform.model.Note;
 import org.lessons.ticketplatform.model.StatusTicket;
 import org.lessons.ticketplatform.model.Ticket;
 import org.lessons.ticketplatform.repository.StatusTicketRepository;
@@ -196,7 +197,10 @@ public class TicketController {
   @PostMapping("delete/{id}")
   public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-    noteRepo.deleteByTicketId(id);
+    List<Note> allByTicketId = noteRepo.findByTicketId(id);
+    for (Note note : allByTicketId) {
+      noteRepo.deleteById(note.getId());
+    }
     ticketRepo.deleteById(id);
 
     redirectAttributes.addFlashAttribute("deleteMsg", "Ticket deleted");
