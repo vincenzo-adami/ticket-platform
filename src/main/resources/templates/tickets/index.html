@@ -11,6 +11,7 @@
     <main>
       <div class="container py-3">
         <div class="row">
+          <!-- alert ticket creation -->
           <div th:if="${successMsg != null}">
             <div
               class="alert alert-success alert-dismissible fade show my-3"
@@ -25,6 +26,7 @@
               ></button>
             </div>
           </div>
+          <!-- alert ticket update -->
           <div th:if="${updateMsg != null}">
             <div
               class="alert alert-success alert-dismissible fade show my-3"
@@ -39,6 +41,7 @@
               ></button>
             </div>
           </div>
+          <!-- alert ticket delete -->
           <div th:if="${deleteMsg != null}">
             <div
               class="alert alert-success alert-dismissible fade show my-3"
@@ -54,6 +57,7 @@
             </div>
           </div>
           <div class="col-12">
+            <!-- search form -->
             <form th:action="@{/tickets}" method="get">
               <div class="input-group">
                 <input
@@ -70,6 +74,7 @@
               </div>
             </form>
           </div>
+          <!-- allticket or allticketByKeyword -->
           <div class="col-12 table-responsive">
             <table
               th:unless="${tickets.isEmpty()}"

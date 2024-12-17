@@ -75,7 +75,7 @@ public class UserController {
     }
 
     // add current encrypt to password
-    user.get().setPassword("{noop}" + userForm.getPassword());
+    user.get().setPassword(userForm.getPassword());
     user.get().setStatus(userForm.isStatus());
     userRepo.save(user.get());
 
