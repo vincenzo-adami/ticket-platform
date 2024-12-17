@@ -39,7 +39,8 @@ public class PasswordController {
       @AuthenticationPrincipal DatabaseUserDetails userDetails, RedirectAttributes redirectAttributes) {
 
     // add error to actual password if not equals to one in db
-    if (!(changePasswordForm.getActualPassword().equals(userDetails.getPassword().substring(6)))) {
+    Optional<User> currenUser = userRepo.findByUsername(userDetails.getUsername());
+    if (!(changePasswordForm.getActualPassword().equals(currenUser.get().getPassword().substring(6)))) {
       bindingResult.addError(new FieldError("changePasswordForm", "actualPassword", "Actual Password is different"));
     }
 
